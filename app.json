@@ -1,0 +1,11 @@
+{
+  "expo": {
+    "name": "codet1",
+    "slug": "codet1",
+    "version": "1.0.0",
+    "assetBundlePatterns": [
+      "**/*"
+    ]
+  },
+  "name": "codet1"
+}
