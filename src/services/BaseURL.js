@@ -1,0 +1,1 @@
+export const baseUrl = 'http://192.168.124.57:8000/api/codet-v1';
