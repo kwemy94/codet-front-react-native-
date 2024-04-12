@@ -7,19 +7,40 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 import DashboardScreen from '../src/screens/dashboard/Index';
 import Card from '../src/screens/Card/Index';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import MemberList from '../src/screens/membres/Index';
+import Login from '../src/authentication/Index';
+import LogOut from '../src/authentication/LogOut';
 
 
 const Drawer = createDrawerNavigator();
 
 export const Admin = () => {
   return (
-    <Drawer.Navigator>
+    <Drawer.Navigator
+      screenOptions={{ 
+        // headerTintColor: 'red',
+        drawerStyle: {
+          backgroundColor: '#7EC1F7',
+          width: 230,
+        },
+      }}
+
+    >
       <Drawer.Screen
         name='Dashboard'
         component={DashboardScreen}
         options={{ 
           title: "My Dashboard",
           drawerIcon: (() =>(<Ionicons name="color-palette-outline" size={15}/>))
+
+         }}
+      />
+      <Drawer.Screen
+        name='Membres'
+        component={MemberList}
+        options={{ 
+          title: "Nos membres",
+          drawerIcon: (() =>(<Ionicons name="people-outline" size={15}/>))
 
          }}
       />
@@ -37,13 +58,14 @@ export const Admin = () => {
 
        }}
       />
-      <Drawer.Screen name='deconnexion' component={Card}
+      <Drawer.Screen name='deconnexion' component={LogOut}
       options={{ 
         title: "Log-out",
         drawerIcon: (({color}) =>(<Ionicons name="log-out-outline" color={color} size={15}/>))
 
        }}
       />
+      {/* <Ionicons name="card-outline" size={15}/> */}
       
     </Drawer.Navigator>
   );

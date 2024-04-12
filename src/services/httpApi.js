@@ -11,7 +11,11 @@ const headers ={
     
 };
 
-
+/**
+ * liste des endpoints de cartes
+ * @param {*} param : contient la liste des objets
+ * @returns 
+ */
 export const getCardService = (param = null) =>{
     return axios.get(`${baseUrl}/cards`, param, headers);
 }
@@ -20,4 +24,15 @@ export const postCardService = (param = null) =>{
 }
 export const deleteCardService = (param = null) =>{
     return axios.delete(`${baseUrl}/cards/${param}`, param, headers);
+}
+
+/**
+ * liste des endpoinds des utilisateurs
+ */
+export const getAllUserService = (param = null) =>{
+    return axios.get(`${baseUrl}/user`, param, headers);
+}
+
+export const deleteUserService = (param = null) =>{
+    return axios.delete(`${baseUrl}/user/${param}`, param, headers);
 }

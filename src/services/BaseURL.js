@@ -1,1 +1,1 @@
-export const baseUrl = 'http://192.168.124.57:8000/api/codet-v1';
+export const baseUrl = 'http://192.168.155.57:8000/api/codet-v1';
