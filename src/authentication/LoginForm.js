@@ -5,6 +5,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { AuthContext } from '../tools/Index';
 import { toastNotif } from '../services/NotificationToast';
 import Ionicons from '@expo/vector-icons/Ionicons';
+import { useNavigation } from '@react-navigation/native';
 
 const LoginForm = () => {
     const { setIsLogin } = useContext(AuthContext);
@@ -13,6 +14,7 @@ const LoginForm = () => {
     const [errors, setErrors] = useState('');
     const [loader, setLoader] = useState(false);
 
+    const navigation = useNavigation();
 
     const handleSubmit = async () => {
         if (email != '' && password != '') {
@@ -23,12 +25,14 @@ const LoginForm = () => {
                 console.log(res.status);
                 if (res.status == 200) {
                     let user = res.data;
-                    AsyncStorage.setItem([
-                        ['user', JSON.stringify(res.data.user)],
-                        ['token', JSON.stringify(res.data.authorization.token)]
-                    ]);
+                    AsyncStorage.setItem('user', JSON.stringify(res.data.user));
+                    AsyncStorage.setItem('token', JSON.stringify(res.data.authorization.token));
                     setIsLogin(true);
+                    console.log(navigation);
+                    setLoader(false)
                     toastNotif('success', 'Vous êtes connecté !');
+                    navigation.navigate('Application')
+                    // navigation.popToTop('Application')
                 }
             }).catch(err => {
                 console.log(err.response.status);

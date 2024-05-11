@@ -20,6 +20,9 @@ const MemberList = ({navigation}) => {
         // {title: "yuycjj", description: "klji"},
     ]);
     const [status, setStatus] = useState();
+    const [userDetails, setUserDetails] = useState(false);
+    const [currentUser, setCurrentUser] = useState({});
+
     const getMembers = async () => {
         await getAllUserService().then(res => {
             console.log(res.status);
@@ -36,62 +39,77 @@ const MemberList = ({navigation}) => {
 
     useEffect(() => {
         getMembers();
-    }, [])
+    }, []);
+
+    const handleDetails = (user) =>{
+        // console.log(navigation);
+        
+        setUserDetails(!userDetails);
+        setCurrentUser(user);
+        // return 
+    }
 
 
     return (
-        <SafeAreaView style={styles.container}>
-            <View style={styles.listCard}>
-                <FlatList
-                    data={members}
-                    renderItem={({ item }) => {
-                        return (
-                            <View style={styles.listCard}>
-                                <View style={{ flexDirection: 'row' }}>
-                                    <View style={styles.viewImg}>
-                                        <Image source={avatar} style={styles.img} />
+        <>
+        {
+            userDetails?
+            <ShowUser user={currentUser} />
+            :
+            <SafeAreaView style={styles.container}>
+                <View style={styles.listCard}>
+                    <FlatList
+                        data={members}
+                        renderItem={({ item }) => {
+                            return (
+                                <View style={styles.listCard}>
+                                    <View style={{ flexDirection: 'row' }}>
+                                        <View style={styles.viewImg}>
+                                            <Image source={avatar} style={styles.img} />
+                                        </View>
+                                        <View style={styles.userInfo}>
+                                            
+                                            <Text style={{fontWeight: 'bold'}} >
+                                                Nom : 
+                                                <Text style={styles.cardDescription}> { item.name}</Text>
+                                            </Text>
+                                            <Text style={{fontWeight: 'bold'}} >
+                                                Tél : 
+                                                <Text style={styles.cardDescription}> { item.phone}</Text>
+                                            </Text>
+                                            <Text style={{fontWeight: 'bold'}}>
+                                                Email :
+                                                <Text style={styles.cardDescription}>{item.email}</Text>
+                                            </Text>
+                                            <Text style={{fontWeight: 'bold'}}>
+                                                Ville :
+                                                <Text style={styles.amount}>{ item.town_residence}</Text>
+                                            </Text>
+                                        </View>
                                     </View>
-                                    <View style={styles.userInfo}>
-                                        
-                                        <Text style={{fontWeight: 'bold'}} >
-                                            Nom : 
-                                            <Text style={styles.cardDescription}> { item.name}</Text>
-                                        </Text>
-                                        <Text style={{fontWeight: 'bold'}} >
-                                            Tél : 
-                                            <Text style={styles.cardDescription}> { item.phone}</Text>
-                                        </Text>
-                                        <Text style={{fontWeight: 'bold'}}>
-                                            Email :
-                                            <Text style={styles.cardDescription}>{item.email}</Text>
-                                        </Text>
-                                        <Text style={{fontWeight: 'bold'}}>
-                                            Ville :
-                                            <Text style={styles.amount}>{ item.town_residence}</Text>
-                                        </Text>
+
+                                    <View style={{ flexDirection: 'row-reverse' }}>
+                                        <DeleteUser id={item.id} setMembers={setMembers} />
+                                        {/* <ShowUser id={item.id} setMembers={setMembers} /> */}
+                                        <TouchableOpacity
+                                            style={styles.tOpacity}
+                                            onPress={()=> handleDetails(item)}
+                                            >
+                                            <Ionicons name='eye-outline' size={15} style={styles.icon}/>
+                                        </TouchableOpacity>
                                     </View>
                                 </View>
-
-                                <View style={{ flexDirection: 'row-reverse' }}>
-                                    <DeleteUser id={item.id} setMembers={setMembers} />
-                                    {/* <ShowUser id={item.id} setMembers={setMembers} /> */}
-                                    <TouchableOpacity
-                                        style={styles.tOpacity}
-                                        onPress={()=>{<ShowUser />}}
-                                    >
-                                        <Ionicons name='eye-outline' size={15} style={styles.icon}/>
-                                    </TouchableOpacity>
-                                </View>
-                            </View>
-                        )
-
-                    }}
-                    ListEmptyComponent={
-                        <Text style={styles.cardEmpty}>Pas d'utilisateur</Text>
-                    }
-                />
-            </View>
-        </SafeAreaView>
+                            )
+                            
+                        }}
+                        ListEmptyComponent={
+                            <Text style={styles.cardEmpty}>Pas d'utilisateur</Text>
+                        }
+                        />
+                </View>
+            </SafeAreaView>
+        }
+        </>
     )
 }
 

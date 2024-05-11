@@ -11,6 +11,8 @@ import Toast from 'react-native-toast-message';
 import Login from './src/authentication/Index';
 import { AuthProvider } from './src/tools/Index';
 import TabNav from './navigations/TabNav';
+import StackNav from './navigations/StackNav';
+import Presentation from './src/screens/home/Presentation';
 
 const Tab = createBottomTabNavigator();
 export default function App() {
@@ -59,7 +61,9 @@ export default function App() {
         </Tab.Navigator>
         <Toast />
       </NavigationContainer> */}
-      <TabNav/>
+      {/* <TabNav/> */}
+      {/* <Presentation/> */}
+      <StackNav/>
     </AuthProvider>
 
   )

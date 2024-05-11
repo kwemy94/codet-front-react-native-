@@ -4,8 +4,10 @@ import { StatusBar } from 'expo-status-bar';
 import { getCardService } from '../../services/httpApi';
 import CreateCard from './Create';
 import DeleteCard from './Delete';
+import Ionicons from '@expo/vector-icons/Ionicons';
 
 const imgPlan = require('./../../../assets/card.webp');
+const imgNdop = require('./../../../assets/foyer.png');
 
 const Card = () => {
     const [cards, setCards] = useState([
@@ -33,43 +35,51 @@ const Card = () => {
 
     return (
         <SafeAreaView style={styles.container}>
-            <View style={styles.container2}>
-                <Pressable style={styles.addBtn} onPress={() => setCreateCart(!createCart)}>
-                    <Text style={styles.textBtn}>Nouvelle carte</Text>
-                </Pressable>
-            </View>
-            {
-                createCart ?
-                    <CreateCard setCreateCart={setCreateCart} cards={cards} setCards={setCards} />
-                    :
-                    <View style={styles.listCard0}>
-                        <FlatList
-                            data={cards}
-                            renderItem={({ item }) => {
-                                return (
-                                    <ImageBackground source={imgPlan} style={styles.imgBack}>
+            <ImageBackground source={imgNdop} style={{ flex: 1 }}>
+                <View style={styles.container2}>
+                    <Pressable style={styles.addBtn} onPress={() => setCreateCart(!createCart)}>
+                        <Text style={styles.textBtn}>
+                            <Ionicons name='add' size={15} /> {createCart? 'Annuler' : 'Nouveau'} 
+                        </Text>
+                    </Pressable>
+                </View>
+                {
+                    createCart ?
+                        <CreateCard setCreateCart={setCreateCart} cards={cards} setCards={setCards} />
+                        :
+                        <View style={styles.listCard0}>
+                            <FlatList
+                                data={cards}
+                                renderItem={({ item }) => {
+                                    return (
+                                        <ImageBackground 
+                                            source={imgPlan}
+                                            style={styles.imgBack}
+                                            imageStyle={{ borderRadius: 10 }}
+                                        >
 
-                                        <View style={styles.listCard}>
-                                            <Text style={styles.cardTitle}>{item?.title}</Text>
-                                            <Text style={styles.cardDescription} >{item.description}</Text>
-                                            <Text >
-                                                Montant :
-                                                <Text style={styles.amount}>{item.amount}</Text>
-                                            </Text>
-                                            <DeleteCard id={item.id} setCards={setCards} />
-                                        </View>
-                                    </ImageBackground>
-                                )
+                                            <View style={styles.listCard}>
+                                                <Text style={styles.cardTitle}>{item?.title}</Text>
+                                                <Text style={styles.cardDescription} >{item.description}</Text>
+                                                <Text >
+                                                    Montant :
+                                                    <Text style={styles.amount}>{item.amount}</Text>
+                                                </Text>
+                                                <DeleteCard id={item.id} setCards={setCards} />
+                                            </View>
+                                        </ImageBackground>
+                                    )
 
-                            }}
-                            horizontal={true}
-                            ListEmptyComponent={
-                                <Text style={styles.cardEmpty}>Aucune carte disponible</Text>
-                            }
-                        />
-                    </View>
-            }
+                                }}
+                                horizontal={true}
+                                ListEmptyComponent={
+                                    <Text style={styles.cardEmpty}>Aucune carte disponible</Text>
+                                }
+                            />
+                        </View>
+                }
 
+            </ImageBackground>
         </SafeAreaView>
     )
 }
@@ -79,23 +89,24 @@ export default Card
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backGroundColor: '#f5f5f5',
+        backgroundColor: '#f5f5f5',
         paddingTop: StatusBar.currentHeight,
     },
     container2: {
-        backGroundColor: 'red',
+        flexDirection: 'row-reverse',
+        paddingRight: 40,
+        margin: 5
 
     },
     listCard0: {
         flex: 1,
         padding: 10,
-        // margin: 4,
 
     },
     listCard: {
         flex: 1,
         paddingHorizontal: 16,
-        // borderWidth: 1,
+        borderWidth: 1,
         padding: 10,
         borderRadius: 5,
         elevation: 5
@@ -117,15 +128,11 @@ const styles = StyleSheet.create({
 
     },
     addBtn: {
-        paddingVertical: 5,
-        paddingHorizontal: 32,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backGroundColor: 'red',
-        borderRadius: 4,
+        paddingVertical: 4,
+        paddingHorizontal: 3,
         backgroundColor: 'forestgreen',
-        borderRadius: 10,
-        width:'50%'
+        borderRadius: 8,
+        width: '30%'
 
     },
     amount: {
@@ -139,14 +146,10 @@ const styles = StyleSheet.create({
         letterSpacing: 0.25,
         color: 'white',
     },
-    imgBack:{
-        marginBottom:5,
-        justifyContent: 'center', 
-        alignItems: 'center',
-        padding: 20,
+    imgBack: {
+        padding: 15,
         height: 300,
         margin: 8,
-        borderRadius: 5,
         width: 250
     },
 });

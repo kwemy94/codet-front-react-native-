@@ -58,13 +58,13 @@ export const Admin = () => {
 
        }}
       />
-      <Drawer.Screen name='deconnexion' component={LogOut}
+      {/* <Drawer.Screen name='deconnexion' component={LogOut}
       options={{ 
         title: "Log-out",
         drawerIcon: (({color}) =>(<Ionicons name="log-out-outline" color={color} size={15}/>))
 
        }}
-      />
+      /> */}
       {/* <Ionicons name="card-outline" size={15}/> */}
       
     </Drawer.Navigator>

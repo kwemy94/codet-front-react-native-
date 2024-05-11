@@ -9,7 +9,7 @@ export const AuthContext = createContext({});
 
 export const AuthProvider = ({ children }) => {
 
-    const [isLogin, setIsLogin] = useState(true);
+    const [isLogin, setIsLogin] = useState(false);
     const getToken = async (auth=false) => {
         try { 
             let token = await AsyncStorage.getItem('token');
